@@ -92,6 +92,7 @@ func (suite *PoCTestSuite) TestStuckPacketOnBadAck() {
 	suite.Require().NotEmpty(actualAck)
 
 	// 5. MALICIOUS ACTION: Overwrite Acknowledgement on B with Garbage
+	// This simulates a malicious counterparty logic that writes non-standard Ack bytes.
 	garbageAck := []byte("invalid-json-garbage-ack")
 	suite.chainB.GetSimApp().IBCKeeper.ChannelKeeper.SetPacketAcknowledgement(
 		suite.chainB.GetContext(),
