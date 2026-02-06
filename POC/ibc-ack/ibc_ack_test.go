@@ -87,11 +87,6 @@ func (suite *PoCTestSuite) TestStuckPacketOnBadAck() {
 
 	// 4. B has written Acknowledgement. We verify it exists.
 	ackKey := host.PacketAcknowledgementKey(packet.GetDestPort(), packet.GetDestChannel(), packet.GetSequence())
-	// Use GetSimApp() but cast it? ibctesting.TestChain.App is TestingApp interface.
-	// We need to access IBCKeeper.
-	// ibctesting.TestChain.GetSimApp() returns *simapp.SimApp?
-	// Let's check `chain.go`.
-	// Generally GetSimApp() is available.
 	actualAck, found := suite.chainB.GetSimApp().IBCKeeper.ChannelKeeper.GetPacketAcknowledgement(suite.chainB.GetContext(), packet.GetDestPort(), packet.GetDestChannel(), packet.GetSequence())
 	suite.Require().True(found)
 	suite.Require().NotEmpty(actualAck)
